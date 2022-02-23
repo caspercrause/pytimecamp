@@ -128,6 +128,8 @@ class Timecamp:
             base_url += "/with_subtasks/1"
         if kwargs.get('task_id'):
             base_url += "/task_id/" + str(kwargs.get('task_id'))
+        if kwargs.get('include_project'):
+            base_url += "/include_project/" + str(kwargs.get('include_project'))
         if kwargs.get('date'):
             base_url += "/date/" + string_from_date_type(kwargs.get('date'))
         self.last_request_url = base_url
@@ -209,7 +211,9 @@ class Timecamp:
 
     def entries(self, from_date=None, to_date=None, task_ids=None,
                 user_ids=None,
-                embed_user=False, with_subtasks=False):
+                embed_user=False, 
+                with_subtasks=False,
+                include_project=True):
         if (task_ids is not None) and (
         not isinstance(task_ids, (tuple, list))):
             raise TimecampError("task_ids needs to be None, list or tuple.")
@@ -219,7 +223,8 @@ class Timecamp:
         entries = self._request("entries", from_date=from_date,
                                 to_date=to_date,
                                 task_ids=task_ids, user_ids=user_ids,
-                                with_subtasks=with_subtasks)
+                                with_subtasks=with_subtasks,
+                                include_project=include_project)
         for entry in entries:
             if embed_user:
                 entry['user_id'] = self.user_by_id(entry['user_id'])
