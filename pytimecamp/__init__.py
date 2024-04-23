@@ -124,6 +124,8 @@ class Timecamp:
             data['exclude_archived'] = 1
         if kwargs.get('with_subtasks'):
             base_url += "/with_subtasks/1"
+        if kwargs.get('opt_fields'):
+            base_url += "/opt_fields/" + str(kwargs.get('opt_fields'))
         if kwargs.get('task_id'):
             base_url += "/task_id/" + str(kwargs.get('task_id'))
         if kwargs.get('include_project'):
@@ -205,14 +207,14 @@ class Timecamp:
         return task_id, task_data
 
     def entries(self, from_date=None, to_date=None, task_ids=None, user_ids=None,
-                embed_user=False, with_subtasks=False, include_project=True):
+                embed_user=False, with_subtasks=False, include_project=True, opt_fields=None):
         if (task_ids is not None) and (not isinstance(task_ids, (tuple, list))):
             raise TimecampError("task_ids needs to be None, list or tuple.")
         if (user_ids is not None) and (not isinstance(user_ids, (tuple, list))):
             raise TimecampError("user_ids needs to be None, list or tuple.")
         entries = self._request("entries", from_date=from_date, to_date=to_date,
                                 task_ids=task_ids, user_ids=user_ids,
-                                with_subtasks=with_subtasks, include_project=include_project)
+                                with_subtasks=with_subtasks, include_project=include_project, opt_fields=opt_fields)
         for entry in entries:
             if embed_user:
                 entry['user_id'] = self.user_by_id(entry['user_id'])

@@ -1,6 +1,10 @@
+LICENCE
+README.md
+setup.cfg
 setup.py
 pytimecamp/__init__.py
 pytimecamp.egg-info/PKG-INFO
 pytimecamp.egg-info/SOURCES.txt
 pytimecamp.egg-info/dependency_links.txt
+pytimecamp.egg-info/requires.txt
 pytimecamp.egg-info/top_level.txt
